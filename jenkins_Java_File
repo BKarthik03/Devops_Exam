@@ -1,0 +1,39 @@
+pipeline{
+  agent any
+
+  tools{
+    jdk 'jdk21'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: 'https://github.com/BKarthik03/Devops_Exam'
+      }
+    }
+
+    stage('Compile') {
+      steps {
+        echo "Compiling Java Program..."
+        sh 'javac HelloWorld.java'
+      }
+    }
+
+    stage('Executing') {
+      steps {
+        echo "Executing Java Program..."
+        sh 'java HelloWorld'
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "Build and Execution Successful...!"
+    }
+    failure {
+      echo "Build Failed!"
+    }
+  }
+}
+  
