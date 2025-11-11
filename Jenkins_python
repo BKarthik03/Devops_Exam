@@ -8,7 +8,7 @@ pipeline{
 
     stage('Execute'){
       echo "Executing Python File.."
-      sh 'python3 Devops_Python.py'
+      sh 'python3 Devops_python.py'
     }
   }
 
