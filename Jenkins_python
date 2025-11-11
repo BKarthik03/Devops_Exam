@@ -1,0 +1,22 @@
+pipeline{
+  stages{
+    stage('checkout'){
+      steps{
+        git branch:'main', url:"https://github.com/BKarthik03/Devops_Exam"
+      }
+    }
+
+    stage('Execute'){
+      echo "Executing Python File.."
+      sh 'python3 Hello.py'
+    }
+  }
+
+  post{
+    success{
+      echo "Successfully Executed!!"
+    }failure{
+      echo "Execution Failed..!!"
+    }
+  }
+}
