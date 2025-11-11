@@ -1,4 +1,5 @@
 pipeline{
+  agent any
   stages{
     stage('checkout'){
       steps{
@@ -15,7 +16,7 @@ pipeline{
   }
 
   post{
-    success{
+    Success{
       echo "Successfully Executed!!"
     }failure{
       echo "Execution Failed..!!"
