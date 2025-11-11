@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    environment {
+        JAVA_HOME = tool 'JDK 11' // Adjust based on your Jenkins setup
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your code from Git (if applicable)
+                git branch:'main',url:'https://github.com/BKarthik03/Devops_Exam'
+            }
+        }
+
+        stage('Get User Input') {
+            steps {
+                script {
+                    // Prompt the user for input (manual step)
+                    def userInput = input(
+                        id: 'userInput', // Unique identifier for the input step
+                        message: 'Please enter your details', // The prompt message
+                        parameters: [
+                            string(
+                                name: 'Full Name', 
+                                defaultValue: '', 
+                                description: 'Enter your full name'
+                            ),
+                            string(
+                                name: 'Age', 
+                                defaultValue: '30', 
+                                description: 'Enter your age'
+                            ),
+                            string(
+                                name: 'Salary', 
+                                defaultValue: '50000', 
+                                description: 'Enter your salary'
+                            ),
+                            booleanParam(
+                                name: 'Java Developer?', 
+                                defaultValue: true, 
+                                description: 'Are you a Java developer?'
+                            )
+                        ]
+                    )
+
+                    // Use the input values in subsequent steps
+                    echo "User's Full Name: ${userInput['Full Name']}"
+                    echo "User's Age: ${userInput['Age']}"
+                    echo "User's Salary: ${userInput['Salary']}"
+                    echo "Is Java Developer? ${userInput['Java Developer?']}"
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Your build commands, such as compiling or running Java program
+                    sh 'javac ScannerExample.java'
+                    sh 'java ScannerExample'
+                }
+            }
+        }
+    }
+}
